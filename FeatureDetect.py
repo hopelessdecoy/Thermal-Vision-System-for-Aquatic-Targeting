@@ -11,7 +11,7 @@ while True:
     frame = cap.read()[1]    
     ref= cv2.imread('ref.jpg')
 
-    '''#For use with thermal camera
+    #For use with thermal camera
     #May require new reference image
     #Human body heat
     red=255
@@ -28,13 +28,13 @@ while True:
     # find the colors within the specified boundaries and apply
     # the mask
     mask = cv2.inRange(frame, lower, upper)
-    select = cv2.bitwise_and(frame, frame, mask = mask)'''
+    select = cv2.bitwise_and(frame, frame, mask = mask)
 
     #Initialize orb method
     orb = cv2.ORB_create()
 
     #Compare and calculate feature distance
-    kp1, des1 = orb.detectAndCompute(frame,None)
+    kp1, des1 = orb.detectAndCompute(select,None)
     kp2, des2 = orb.detectAndCompute(ref,None)
 
     bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
@@ -44,7 +44,7 @@ while True:
     matches = sorted(matches, key = lambda x:x.distance)
 
     #Store Matches Plot for Display
-    output = cv2.drawMatches(frame,kp1,ref,kp2,matches[:20],None, flags=2)
+    output = cv2.drawMatches(select,kp1,ref,kp2,matches[:20],None, flags=2)
     cv2.putText(output,str(int((len(matches)/500)*100)),(350,455), font, 2,(255,255,255),2,cv2.LINE_AA)
     cv2.putText(output,"Match %:",(55,455), font, 2,(255,255,255),2,cv2.LINE_AA)
     #print(str(matches))
