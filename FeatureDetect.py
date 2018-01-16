@@ -9,7 +9,7 @@ print("Press Q to Exit.")
 while True:
     # initialize the camera and reference picture
     frame = cap.read()[1]    
-    ref= cv2.imread('ref.jpg')
+    ref= cv2.imread('ref2.jpg')
 
     #For use with thermal camera
     #May require new reference image
